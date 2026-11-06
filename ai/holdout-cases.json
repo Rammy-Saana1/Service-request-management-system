@@ -1,0 +1,114 @@
+[
+  {
+    "id": "H01",
+    "purpose": "Suspicious authentication activity",
+    "input": {
+      "title": "Unexpected MFA approval prompts",
+      "description": "I received three MFA approval prompts that I did not initiate. I can still sign in, but I denied every prompt and have not approved any access."
+    },
+    "expected": {
+      "category": "Access",
+      "priority": "High",
+      "summary": "An employee received repeated unrequested MFA approval prompts, denied them, and can still access the account.",
+      "suggestedReply": "Thanks for denying the unexpected prompts. We will review the account activity as a potential security issue and contact you with the next steps."
+    }
+  },
+  {
+    "id": "H02",
+    "purpose": "Minor hardware fault with workaround",
+    "input": {
+      "title": "Reception printer tray is jammed",
+      "description": "The reception printer cannot use tray two, but tray one prints normally and the second-floor printer is also available. There is no deadline."
+    },
+    "expected": {
+      "category": "Hardware",
+      "priority": "Low",
+      "summary": "A reception printer has one jammed tray, while another tray and a nearby printer remain available.",
+      "suggestedReply": "Thanks for reporting the printer fault and available alternatives. We will arrange a check of the affected tray."
+    }
+  },
+  {
+    "id": "H03",
+    "purpose": "Business-critical application outage",
+    "input": {
+      "title": "Payroll processing system unavailable",
+      "description": "The payroll application will not open for the entire payroll team. Today's payment run has stopped, the submission cutoff is in two hours, and there is no manual workaround."
+    },
+    "expected": {
+      "category": "Software",
+      "priority": "Critical",
+      "summary": "The entire payroll team cannot open the payroll application, stopping a payment run due in two hours with no workaround.",
+      "suggestedReply": "Thanks for reporting the payroll outage and cutoff. The service desk will treat this as a critical incident and coordinate immediate investigation."
+    }
+  },
+  {
+    "id": "H04",
+    "purpose": "Single user blocked by network issue with near deadline",
+    "input": {
+      "title": "VPN fails before client presentation",
+      "description": "My VPN connection fails on the company laptop while I am travelling. I need files on the internal drive for a client presentation in two hours, and I have no alternative connection."
+    },
+    "expected": {
+      "category": "Network",
+      "priority": "High",
+      "summary": "A travelling employee cannot connect to the VPN before a client presentation in two hours and has no alternative connection.",
+      "suggestedReply": "Thanks for explaining the VPN error, deadline, and lack of an alternative. We will investigate the connection and contact you for any required diagnostics."
+    }
+  },
+  {
+    "id": "H05",
+    "purpose": "Routine Microsoft 365 guidance request",
+    "input": {
+      "title": "How to share a OneDrive training folder",
+      "description": "Please show me how to share a read-only OneDrive folder with my project group before onboarding starts next month. Nothing is blocked today."
+    },
+    "expected": {
+      "category": "Microsoft 365",
+      "priority": "Low",
+      "summary": "An employee wants guidance on sharing a read-only OneDrive folder before onboarding next month, with no current work blocked.",
+      "suggestedReply": "Thanks for the sharing question and timing. We will provide the approved OneDrive sharing steps and check whether any access restrictions apply."
+    }
+  },
+  {
+    "id": "H06",
+    "purpose": "Ambiguous intermittent software problem",
+    "input": {
+      "title": "Browser closes intermittently",
+      "description": "The approved browser closed twice this afternoon while I was entering data. It reopened successfully, and I do not know whether other people have the same problem."
+    },
+    "expected": {
+      "category": "Software",
+      "priority": "Medium",
+      "summary": "An approved browser closed twice for one known employee, reopened successfully, and may or may not affect others.",
+      "suggestedReply": "Thanks for reporting the intermittent browser closures. We will review the application and error details and check whether the issue affects other users."
+    }
+  },
+  {
+    "id": "H07",
+    "purpose": "Planned access request with temporary cover",
+    "input": {
+      "title": "Shared mailbox access for new starter",
+      "description": "A new employee needs access to the Support shared mailbox when they start in five business days. Their team lead can monitor the mailbox until access is ready."
+    },
+    "expected": {
+      "category": "Access",
+      "priority": "Low",
+      "summary": "A new starter needs shared-mailbox access in five business days, and the team lead can cover until it is ready.",
+      "suggestedReply": "Thanks for the access request and start date. We will verify the required authorization and prepare the shared-mailbox access."
+    }
+  },
+  {
+    "id": "H08",
+    "purpose": "Partial office network degradation with workaround",
+    "input": {
+      "title": "Training room Wi-Fi is unstable",
+      "description": "Wi-Fi drops every few minutes for 12 people in the training room. Wired connections work, so the session is continuing, but changing cables is disruptive."
+    },
+    "expected": {
+      "category": "Network",
+      "priority": "Medium",
+      "summary": "Unstable training-room Wi-Fi affects 12 people, while wired connections allow the session to continue with disruption.",
+      "suggestedReply": "Thanks for describing the affected group and wired workaround. We will investigate the training-room wireless connection and confirm the next step."
+    }
+  }
+]

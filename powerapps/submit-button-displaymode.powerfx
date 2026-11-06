@@ -1,0 +1,10 @@
+// btnSubmit.DisplayMode
+// This is a convenience check; OnSelect repeats validation so correctness does not
+// depend on the visual button state alone.
+If(
+    varSubmitting ||
+    IsBlank(Trim(txtTitle.Text)) ||
+    IsBlank(Trim(txtDescription.Text)),
+    DisplayMode.Disabled,
+    DisplayMode.Edit
+)

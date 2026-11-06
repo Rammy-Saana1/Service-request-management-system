@@ -1,0 +1,21 @@
+// frmRequest.OnSuccess
+// LastSubmit is available only after SharePoint confirms that the item was created.
+Set(varSubmitting, false);
+Set(varLastRequestId, frmRequest.LastSubmit.ID);
+Notify(
+    "Request #" & Text(varLastRequestId) & " was submitted for triage.",
+    NotificationType.Success
+);
+ResetForm(frmRequest);
+NewForm(frmRequest);
+Refresh(ServiceRequests)
+
+// frmRequest.OnFailure
+// Error contains the connector's message. In a production app, map technical errors
+// to friendlier text and send diagnostics to an approved telemetry destination.
+Set(varSubmitting, false);
+Notify(
+    "The request was not submitted. " & Coalesce(frmRequest.Error, "Try again or contact the service desk."),
+    NotificationType.Error,
+    8000
+)

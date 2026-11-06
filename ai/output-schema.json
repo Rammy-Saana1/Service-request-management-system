@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceRequestTriage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category",
+    "priority",
+    "summary",
+    "suggestedReply"
+  ],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "Access",
+        "Hardware",
+        "Software",
+        "Microsoft 365",
+        "Network",
+        "Other"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "suggestedReply": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 800
+    }
+  }
+}

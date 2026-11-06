@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local simulation of the Customer Request Triage Assistant">
+  <title>Service Request Management — Local Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#intake" aria-label="Service Request Management home">
+      <span class="brand-mark" aria-hidden="true">SR</span>
+      <span><strong>Service Request Management</strong><small>Local workflow lab</small></span>
+    </a>
+    <div class="mode-pill"><span></span> Simulated AI · local only</div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">Customer Request Triage Assistant</p>
+        <h1 id="hero-title">From request to reviewed decision.</h1>
+        <p>Submit a service request, inspect the deterministic triage proposal, and complete a manager review—all on this laptop.</p>
+      </div>
+      <div class="hero-stat" aria-label="Workflow stages">
+        <span>01 · Submit</span><span>02 · Triage</span><span>03 · Review</span>
+      </div>
+    </section>
+
+    <nav class="view-tabs" aria-label="Application views" role="tablist">
+      <button class="tab active" id="intake-tab" type="button" role="tab" data-view="intake" aria-controls="intake-view" aria-selected="true" tabindex="0">New request</button>
+      <button class="tab" id="manager-tab" type="button" role="tab" data-view="manager" aria-controls="manager-view" aria-selected="false" tabindex="-1">Manager review <span id="queue-count" class="count" aria-label="Awaiting review count">-</span></button>
+    </nav>
+
+    <section id="intake-view" class="view active" role="tabpanel" aria-labelledby="intake-tab">
+      <div class="two-column">
+        <article class="panel form-panel">
+          <div class="panel-heading">
+            <div><p class="step">Request intake</p><h2 id="intake-heading">Tell us what you need</h2></div>
+            <span class="required-note">All fields required</span>
+          </div>
+          <form id="request-form">
+            <label for="requester">Your name or email</label>
+            <input id="requester" name="requester" maxlength="120" autocomplete="name" placeholder="Alex Morgan" required>
+
+            <label for="title">Short title <span id="title-count">0 / 120</span></label>
+            <input id="title" name="title" maxlength="120" placeholder="VPN disconnects during calls" required>
+
+            <label for="description">Description <span id="description-count">0 / 2,000</span></label>
+            <textarea id="description" name="description" minlength="20" maxlength="2000" rows="8" placeholder="Describe what happened, who is affected, and whether there is a workaround." required></textarea>
+            <p class="privacy-note">Use fictional test data. Do not enter passwords, authentication codes, payment data, or personal information.</p>
+            <button class="primary" type="submit" id="submit-button">Submit for triage</button>
+          </form>
+          <div id="form-message" class="message" role="status" aria-live="polite"></div>
+        </article>
+
+        <aside class="panel process-panel" aria-labelledby="process-heading">
+          <p class="step">How this demo works</p>
+          <h2 id="process-heading">A transparent local workflow</h2>
+          <ol class="process-list">
+            <li><span>1</span><div><strong>Saved locally</strong><p>Python validates the form and stores it in SQLite.</p></div></li>
+            <li><span>2</span><div><strong>Rules propose triage</strong><p>An explainable keyword engine suggests category, priority, summary, and reply.</p></div></li>
+            <li><span>3</span><div><strong>A person decides</strong><p>A manager can edit the proposal, approve it, or reject it with a reason.</p></div></li>
+          </ol>
+          <div class="callout"><strong>Important:</strong> simulated AI is deterministic test logic. It does not call or imitate a hosted language model.</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="manager-view" class="view" role="tabpanel" aria-labelledby="manager-tab" hidden>
+      <article id="manager-login-panel" class="panel login-panel">
+        <p class="step">Protected local view</p>
+        <h2 id="manager-login-heading">Manager sign-in</h2>
+        <p class="login-note">Enter the manager name used in the audit fields and the local passcode chosen when the server started.</p>
+        <form id="manager-login-form">
+          <label for="manager-name">Manager name</label>
+          <input id="manager-name" name="reviewer" maxlength="120" autocomplete="username" required>
+          <label for="manager-passcode">Local manager passcode</label>
+          <input id="manager-passcode" name="passcode" type="password" minlength="12" autocomplete="current-password" required>
+          <button id="manager-login-button" class="primary" type="submit">Sign in</button>
+        </form>
+        <div id="manager-login-message" class="message" role="status" aria-live="polite"></div>
+      </article>
+
+      <article id="manager-queue-panel" class="panel queue-panel" hidden>
+        <div class="panel-heading queue-heading">
+          <div><p class="step">Human review</p><h2 id="manager-heading" tabindex="-1">Manager queue</h2></div>
+          <div class="queue-tools">
+            <label for="status-filter" class="sr-only">Filter by status</label>
+            <select id="status-filter">
+              <option value="Awaiting review">Awaiting review</option>
+              <option value="">All statuses</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+            <button id="refresh-button" class="secondary" type="button">Refresh</button>
+            <button id="logout-button" class="secondary" type="button">Sign out</button>
+          </div>
+        </div>
+        <div id="queue-message" class="message" role="status" aria-live="polite"></div>
+        <div id="request-list" class="request-list"></div>
+      </article>
+    </section>
+  </main>
+
+  <dialog id="review-dialog" aria-labelledby="review-heading">
+    <form method="dialog" id="review-form">
+      <div class="dialog-heading">
+        <div><p class="step">Manager decision</p><h2 id="review-heading">Review request</h2></div>
+        <button class="icon-button" type="button" id="close-dialog" aria-label="Close review">×</button>
+      </div>
+      <div id="request-context" class="request-context"></div>
+      <input id="review-id" type="hidden">
+      <div class="review-grid">
+        <div><label for="review-category">Category</label><select id="review-category" required></select></div>
+        <div><label for="review-priority">Priority</label><select id="review-priority" required></select></div>
+      </div>
+      <label for="review-summary">Summary</label>
+      <textarea id="review-summary" maxlength="500" rows="3" required></textarea>
+      <label for="review-reply">Suggested reply <span>draft only</span></label>
+      <textarea id="review-reply" maxlength="1200" rows="4" required></textarea>
+      <label for="reviewer">Reviewed by</label>
+      <input id="reviewer" maxlength="120" readonly>
+      <label for="review-comment">Decision note <span>required for rejection</span></label>
+      <textarea id="review-comment" maxlength="1000" rows="3" placeholder="Why are you approving or rejecting this request?"></textarea>
+      <div id="review-message" class="message" role="status" aria-live="polite"></div>
+      <div class="dialog-actions">
+        <button type="button" class="danger" id="reject-button">Reject</button>
+        <button type="button" class="primary" id="approve-button">Approve proposal</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer>Local portfolio simulation · data stays in <code>local-sim/data</code></footer>
+</body>
+</html>

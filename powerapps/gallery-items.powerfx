@@ -1,0 +1,22 @@
+// galRequests.Items
+// StartsWith on the single-line Title column is chosen instead of Search because it
+// is delegable for SharePoint in common scenarios. Multi-line AISummary is displayed
+// but deliberately not searched here because that can make the query nondelegable.
+With(
+    {
+        selectedStatus: ddStatus.Selected.Value,
+        searchText: Trim(txtSearch.Text)
+    },
+    SortByColumns(
+        Filter(
+            ServiceRequests,
+            (selectedStatus = "All" || Status.Value = selectedStatus) &&
+            (
+                IsBlank(searchText) ||
+                StartsWith(Title, searchText)
+            )
+        ),
+        "Created",
+        SortOrder.Descending
+    )
+)

@@ -1,0 +1,17 @@
+// App.OnStart
+// A local collection makes the filter values explicit and gives us an "All" option
+// that does not need to exist in the SharePoint Status choice column.
+ClearCollect(
+    colStatusFilters,
+    {Value: "All"},
+    {Value: "New"},
+    {Value: "Awaiting review"},
+    {Value: "Approved"},
+    {Value: "Needs edit"},
+    {Value: "In progress"},
+    {Value: "Resolved"},
+    {Value: "Closed"}
+);
+
+// Used to disable the submit button while SharePoint is processing a request.
+Set(varSubmitting, false)

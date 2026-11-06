@@ -1,0 +1,17 @@
+# Local Power Platform exports and tenant-specific settings
+*.msapp
+*.zip
+*.pfx
+*.cer
+.env
+local.settings.json
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local simulation runtime files
+local-sim/data/
+__pycache__/

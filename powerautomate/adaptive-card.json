@@ -1,0 +1,137 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "msteams": {
+    "width": "Full"
+  },
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Service request ready for review",
+      "size": "Large",
+      "weight": "Bolder",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Request #@{triggerBody()?['ID']}",
+      "isSubtle": true,
+      "spacing": "None"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Mode: @{if(variables('Use simulated AI'), 'SIMULATED AI', 'REAL AI')}",
+      "weight": "Bolder",
+      "color": "Attention",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Title",
+          "value": "@{triggerBody()?['Title']}"
+        },
+        {
+          "title": "Created",
+          "value": "@{formatDateTime(triggerBody()?['Created'], 'yyyy-MM-dd HH:mm')} UTC"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Original description",
+      "weight": "Bolder",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "@{triggerBody()?['RequestDescription']}",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Review the triage proposal",
+      "weight": "Bolder",
+      "spacing": "Large"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "category",
+      "label": "Category",
+      "value": "@{outputs('Validated_Category')}",
+      "style": "compact",
+      "isRequired": true,
+      "errorMessage": "Select a category.",
+      "choices": [
+        { "title": "Access", "value": "Access" },
+        { "title": "Hardware", "value": "Hardware" },
+        { "title": "Software", "value": "Software" },
+        { "title": "Microsoft 365", "value": "Microsoft 365" },
+        { "title": "Network", "value": "Network" },
+        { "title": "Other", "value": "Other" }
+      ]
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "priority",
+      "label": "Priority",
+      "value": "@{outputs('Validated_Priority')}",
+      "style": "compact",
+      "isRequired": true,
+      "errorMessage": "Select a priority.",
+      "choices": [
+        { "title": "Low", "value": "Low" },
+        { "title": "Medium", "value": "Medium" },
+        { "title": "High", "value": "High" },
+        { "title": "Critical", "value": "Critical" }
+      ]
+    },
+    {
+      "type": "Input.Text",
+      "id": "summary",
+      "label": "Summary",
+      "value": "@{outputs('Validated_Summary')}",
+      "isMultiline": true,
+      "maxLength": 500,
+      "isRequired": true,
+      "errorMessage": "Enter a factual summary."
+    },
+    {
+      "type": "Input.Text",
+      "id": "reply",
+      "label": "Suggested reply (draft — not sent)",
+      "value": "@{outputs('Validated_Reply')}",
+      "isMultiline": true,
+      "maxLength": 1200,
+      "isRequired": true,
+      "errorMessage": "Enter a draft reply."
+    },
+    {
+      "type": "TextBlock",
+      "text": "Compare every field with the original description. Do not approve unsupported promises or invented facts.",
+      "wrap": true,
+      "isSubtle": true,
+      "spacing": "Medium"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Approve",
+      "style": "positive",
+      "data": {
+        "action": "approve"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Edit and approve",
+      "data": {
+        "action": "edit"
+      }
+    }
+  ]
+}

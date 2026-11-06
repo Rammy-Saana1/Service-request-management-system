@@ -1,0 +1,7 @@
+// Intake screen.OnVisible
+// Reset to a known new-item state whenever the user opens this screen.
+If(
+    frmRequest.Mode <> FormMode.New,
+    NewForm(frmRequest)
+);
+Set(varSubmitting, false)

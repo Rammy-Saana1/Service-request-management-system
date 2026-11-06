@@ -1,0 +1,30 @@
+// btnSubmit.OnSelect
+// Validate in a user-friendly order, then let SubmitForm run the data-card updates.
+// UI limits are intentionally tighter than SharePoint's storage limits so cards and
+// AI prompts remain readable.
+With(
+    {
+        cleanTitle: Trim(txtTitle.Text),
+        cleanDescription: Trim(txtDescription.Text)
+    },
+    Switch(
+        true,
+        varSubmitting,
+            Notify("Your request is already being submitted.", NotificationType.Information),
+        IsBlank(cleanTitle),
+            Notify("Enter a short title.", NotificationType.Error),
+        Len(cleanTitle) > 120,
+            Notify("Keep the title to 120 characters or fewer.", NotificationType.Error),
+        IsBlank(cleanDescription),
+            Notify("Describe what happened, who is affected, and any workaround.", NotificationType.Error),
+        Len(cleanDescription) < 20,
+            Notify("Add a little more detail (at least 20 characters).", NotificationType.Error),
+        Len(cleanDescription) > 2000,
+            Notify("Keep the description to 2,000 characters or fewer.", NotificationType.Error),
+        Not(frmRequest.Valid),
+            Notify("Review the highlighted fields before submitting.", NotificationType.Error),
+        // Default branch: validation passed.
+        Set(varSubmitting, true);
+        SubmitForm(frmRequest)
+    )
+)
